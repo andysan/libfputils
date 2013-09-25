@@ -1,5 +1,12 @@
 /tests/Makefile
 /tests/Makefile.in
+/tests/fp80_cvfd
+/tests/fp80_cvtd
+/tests/fp80_cvtf
+/config.h
+/config.h.in
+/doxygen-doc
+/Doxyfile
 /Makefile.in
 /Makefile
 aclocal.m4
@@ -16,8 +23,10 @@ libtool
 ltmain.sh
 missing
 package.m5
+stamp-h1
 .deps
 .libs
+*.a
 *.la
 *.lo
 *.o
