@@ -3,9 +3,11 @@ AC_INIT(libfputils, 1.0, andreas@sandberg.pp.se)
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
-DX_INIT_DOXYGEN([libfputils])
+
 DX_PDF_FEATURE(OFF)
 DX_PS_FEATURE(OFF)
+DX_MAN_FEATURE(OFF)
+DX_INIT_DOXYGEN([libfputils])
 
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 
