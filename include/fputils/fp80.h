@@ -34,6 +34,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /**
  * @defgroup fp80 80-bit Floats
  * Functions handling 80-bit floats.
@@ -241,5 +245,9 @@ fp80_t fp80_cvfd(double fpd);
 void fp80_debug_dump(FILE *fout, fp80_t fp80);
 
 /** @} */
+
+#ifdef  __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
