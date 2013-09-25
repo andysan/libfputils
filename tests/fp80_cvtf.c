@@ -47,11 +47,11 @@ test_cvtf(const char *name, double fin)
     printf("# ");
     fp80_debug_dump(stdout, v80);
     if (v64 == fin ||
-	(isnan(fin) && isnan(v64) && signbit(fin) == signbit(v64))) {
-	test_ok(name);
+        (isnan(fin) && isnan(v64) && signbit(fin) == signbit(v64))) {
+        test_ok(name);
     } else {
-	test_diag("MISMATCH: %e != %e", fin, v64);
-	test_fail(name);
+        test_diag("MISMATCH: %e != %e", fin, v64);
+        test_fail(name);
     }
 }
 

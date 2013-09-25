@@ -58,38 +58,38 @@
 #define FP64_FRAC_QNAN  0x000fffffffffffffULL
 #define FP64_FRAC_QNANI 0x0008000000000000ULL
 
-#define BUILD_IFP64(sign, frac, exp)				\
-    ((sign) ? FP64_SIGN_BIT : 0) |				\
-    (((uint64_t)(exp) << FP64_EXP_SHIFT) & FP64_EXP_MASK) |	\
+#define BUILD_IFP64(sign, frac, exp)                            \
+    ((sign) ? FP64_SIGN_BIT : 0) |                              \
+    (((uint64_t)(exp) << FP64_EXP_SHIFT) & FP64_EXP_MASK) |     \
     ((frac) & FP64_FRAC_MASK)
 
-#define BUILD_FP64(sign, frac, exp)				\
+#define BUILD_FP64(sign, frac, exp)                             \
     { .bits = BUILD_IFP64(sign, frac, exp) }
 
-#define BUILD_FP80_SE(sign, exp)				\
-    ((sign) ? FP80_SIGN_BIT : 0) |				\
+#define BUILD_FP80_SE(sign, exp)                                \
+    ((sign) ? FP80_SIGN_BIT : 0) |                              \
     ((exp) & FP80_EXP_MASK)
 
-#define BUILD_FP80_FI(frac, exp)				\
-    ((exp) ? FP80_INT_BIT : 0) |				\
+#define BUILD_FP80_FI(frac, exp)                                \
+    ((exp) ? FP80_INT_BIT : 0) |                                \
     ((frac) & FP80_FRAC_MASK)
 
-#define BUILD_FP80(sign, frac, exp)			\
-    {							\
-	.u.repr.se = BUILD_FP80_SE(sign, exp),		\
-	.u.repr.fi = BUILD_FP80_FI(frac, exp)		\
+#define BUILD_FP80(sign, frac, exp)                             \
+    {                                                           \
+        .u.repr.se = BUILD_FP80_SE(sign, exp),                  \
+        .u.repr.fi = BUILD_FP80_FI(frac, exp)                   \
     }
 
-#define FP80_FRAC(fp80)				\
+#define FP80_FRAC(fp80)                                         \
     (fp80.u.repr.fi & FP80_FRAC_MASK)
 
-#define FP80_EXP(fp80)				\
+#define FP80_EXP(fp80)                                          \
     (fp80.u.repr.se & FP80_EXP_MASK)
 
-#define FP64_FRAC(fp64)				\
+#define FP64_FRAC(fp64)                                         \
     (fp64.bits & FP64_FRAC_MASK)
 
-#define FP64_EXP(fp80)					\
+#define FP64_EXP(fp80)                                          \
     ((fp64.bits & FP64_EXP_MASK) >> FP64_EXP_SHIFT)
 
 #endif

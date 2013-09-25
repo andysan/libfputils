@@ -49,47 +49,47 @@ test_cvfd_class(const char *name, double fin)
     printf("# ");
     fp80_debug_dump(stdout, v);
     test_diag("isnan: %i, isinf: %i, iszero: %i, isnormal: %i, issubnormal: %i",
-	      fp80_isnan(v), fp80_isinf(v), fp80_iszero(v),
-	      fp80_isnormal(v), fp80_issubnormal(v));
+              fp80_isnan(v), fp80_isinf(v), fp80_iszero(v),
+              fp80_isnormal(v), fp80_issubnormal(v));
     test_diag("class(fp64): %i, expected class: %i, class(fp80): %i",
-	      fp64_class, class, fp80_classify(v));
+              fp64_class, class, fp80_classify(v));
     switch (class) {
     case FP_NAN:
-	class_ok = fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
-	    !fp80_isnormal(v) && !fp80_issubnormal(v);
-	break;
+        class_ok = fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
+            !fp80_isnormal(v) && !fp80_issubnormal(v);
+        break;
 
     case FP_INFINITE:
-	class_ok = !fp80_isnan(v) && fp80_isinf(v) && !fp80_iszero(v) &&
-	    !fp80_isnormal(v) && !fp80_issubnormal(v);
-	break;
+        class_ok = !fp80_isnan(v) && fp80_isinf(v) && !fp80_iszero(v) &&
+            !fp80_isnormal(v) && !fp80_issubnormal(v);
+        break;
     case FP_ZERO:
-	class_ok = !fp80_isnan(v) && !fp80_isinf(v) && fp80_iszero(v) &&
-	    !fp80_isnormal(v) && !fp80_issubnormal(v);
-	break;
+        class_ok = !fp80_isnan(v) && !fp80_isinf(v) && fp80_iszero(v) &&
+            !fp80_isnormal(v) && !fp80_issubnormal(v);
+        break;
 
     case FP_SUBNORMAL:
-	class_ok = !fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
-	    !fp80_isnormal(v) && fp80_issubnormal(v);
-	break;
+        class_ok = !fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
+            !fp80_isnormal(v) && fp80_issubnormal(v);
+        break;
 
     case FP_NORMAL:
-	class_ok = !fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
-	    fp80_isnormal(v) && !fp80_issubnormal(v);
-	break;
+        class_ok = !fp80_isnan(v) && !fp80_isinf(v) && !fp80_iszero(v) &&
+            fp80_isnormal(v) && !fp80_issubnormal(v);
+        break;
 
     default:
-	test_bail("unexpected FP class (%i)", class);
+        test_bail("unexpected FP class (%i)", class);
     }
 
     if (!class_ok) {
-	test_diag("inconsistent classification");
-	test_fail(name);
+        test_diag("inconsistent classification");
+        test_fail(name);
     } else if (fp80_class != class) {
-	test_diag("class mismatch");
-	test_fail(name);
+        test_diag("class mismatch");
+        test_fail(name);
     } else {
-	test_ok(name);
+        test_ok(name);
     }
 }
 

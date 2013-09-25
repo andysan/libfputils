@@ -40,10 +40,10 @@ test_fp80_cvtd_class(const char *name, fp80_t fin, int class)
 {
     double d = fp80_cvtd(fin);
     if (fpclassify(d) != class) {
-	test_diag("wrong class");
-	test_fail(name);
+        test_diag("wrong class");
+        test_fail(name);
     } else {
-	test_ok(name);
+        test_ok(name);
     }
 }
 
@@ -52,10 +52,10 @@ test_fp80_cvtd_inf(const char *name, fp80_t fin, int inf_class)
 {
     double d = fp80_cvtd(fin);
     if (isinf(d) != inf_class) {
-	test_diag("wrong infinity type");
-	test_fail(name);
+        test_diag("wrong infinity type");
+        test_fail(name);
     } else {
-	test_ok(name);
+        test_ok(name);
     }
 }
 

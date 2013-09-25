@@ -37,8 +37,8 @@
 
 typedef union {
     union {
-	uint64_t bits;
-	double value;
+        uint64_t bits;
+        double value;
     };
 } fp64_t;
 
@@ -53,15 +53,15 @@ const fp80_t fp80_nan = BUILD_FP80(0, FP80_FRAC_QNAN, FP80_EXP_SPECIAL);
 static const fp64_t fp64_pinf = BUILD_FP64(0, 0, FP64_EXP_SPECIAL);
 static const fp64_t fp64_ninf = BUILD_FP64(1, 0, FP64_EXP_SPECIAL);
 static const fp64_t fp64_qnan = BUILD_FP64(0,  FP64_FRAC_QNAN,
-					   FP64_EXP_SPECIAL);
+                                           FP64_EXP_SPECIAL);
 static const fp64_t fp64_nqnan = BUILD_FP64(1,  FP64_FRAC_QNAN,
-					    FP64_EXP_SPECIAL);
+                                            FP64_EXP_SPECIAL);
 static const fp64_t fp64_qnani = BUILD_FP64(1, FP64_FRAC_QNANI,
-					    FP64_EXP_SPECIAL);
+                                            FP64_EXP_SPECIAL);
 static const fp64_t fp64_snan = BUILD_FP64(0, FP64_FRAC_SNAN,
-					   FP64_EXP_SPECIAL);
+                                           FP64_EXP_SPECIAL);
 static const fp64_t fp64_nsnan = BUILD_FP64(1, FP64_FRAC_SNAN,
-					    FP64_EXP_SPECIAL);
+                                            FP64_EXP_SPECIAL);
 
 static double
 build_fp64(int sign, uint64_t frac, int exp)
@@ -140,7 +140,7 @@ int
 fp80_isnormal(fp80_t fp80)
 {
     return FP80_EXP(fp80) != 0 && !fp80_isspecial(fp80) ?
-	fp80_sgn(fp80) : 0;
+        fp80_sgn(fp80) : 0;
 }
 
 int
@@ -152,17 +152,17 @@ fp80_issubnormal(fp80_t fp80)
 int
 fp80_classify(fp80_t fp80)
 {
-    if (fp80_issubnormal(fp80))
-	return FP_SUBNORMAL;
-    else if (fp80_iszero(fp80))
-	return FP_ZERO;
-    else if (fp80_isinf(fp80))
-	return FP_INFINITE;
-    else if (fp80_isnan(fp80))
-	return FP_NAN;
-    else {
-	assert(fp80_isfinite(fp80));
-	return FP_NORMAL;
+    if (fp80_issubnormal(fp80)) {
+        return FP_SUBNORMAL;
+    } else if (fp80_iszero(fp80)) {
+        return FP_ZERO;
+    } else if (fp80_isinf(fp80)) {
+        return FP_INFINITE;
+    } else if (fp80_isnan(fp80)) {
+        return FP_NAN;
+    } else {
+        assert(fp80_isfinite(fp80));
+        return FP_NORMAL;
     }
 }
 
@@ -172,34 +172,34 @@ fp80_cvtd(fp80_t fp80)
     const int sign = fp80.u.repr.se & FP80_SIGN_BIT;
 
     if (!fp80_isspecial(fp80)) {
-	const uint64_t frac = fp80.u.repr.fi;
-	const int unb_exp = FP80_EXP(fp80) - FP80_EXP_BIAS;
-	const int fp64_exp = unb_exp + FP64_EXP_BIAS;
-	const uint64_t fp64_frac = frac >> (FP80_FRAC_BITS - FP64_FRAC_BITS);
+        const uint64_t frac = fp80.u.repr.fi;
+        const int unb_exp = FP80_EXP(fp80) - FP80_EXP_BIAS;
+        const int fp64_exp = unb_exp + FP64_EXP_BIAS;
+        const uint64_t fp64_frac = frac >> (FP80_FRAC_BITS - FP64_FRAC_BITS);
 
-	if (fp64_exp > 0 && fp64_exp < FP64_EXP_SPECIAL) {
-	    /* These numbers fall in the range of what we can express
-	     * as normals */
-	    return build_fp64(sign, fp64_frac, fp64_exp);
-	} else if (fp64_exp <= 0) {
-	    uint64_t fp64_denormal_frac = fp64_frac >> (-fp64_exp);
-	    /* Generate a denormal or zero */
-	    return build_fp64(sign, fp64_denormal_frac, 0);
-	} else {
-	    /* Infinity */
-	    return build_fp64(sign, 0, FP64_EXP_SPECIAL);
-	}
+        if (fp64_exp > 0 && fp64_exp < FP64_EXP_SPECIAL) {
+            /* These numbers fall in the range of what we can express
+             * as normals */
+            return build_fp64(sign, fp64_frac, fp64_exp);
+        } else if (fp64_exp <= 0) {
+            uint64_t fp64_denormal_frac = fp64_frac >> (-fp64_exp);
+            /* Generate a denormal or zero */
+            return build_fp64(sign, fp64_denormal_frac, 0);
+        } else {
+            /* Infinity */
+            return build_fp64(sign, 0, FP64_EXP_SPECIAL);
+        }
     } else {
-	if (fp80_isinf(fp80)) {
-	    return build_fp64(sign, 0, FP64_EXP_SPECIAL);
-	} else if (fp80_issnan(fp80)) {
-	    return fp80_sgn(fp80) > 0 ? fp64_snan.value : fp64_nsnan.value;
-	} else if (fp80_isqnani(fp80)) {
-	    return fp64_qnani.value;
-	} else {
-	    assert(fp80_isqnan(fp80));
-	    return fp80_sgn(fp80) > 0 ? fp64_qnan.value : fp64_nqnan.value;
-	}
+        if (fp80_isinf(fp80)) {
+            return build_fp64(sign, 0, FP64_EXP_SPECIAL);
+        } else if (fp80_issnan(fp80)) {
+            return fp80_sgn(fp80) > 0 ? fp64_snan.value : fp64_nsnan.value;
+        } else if (fp80_isqnani(fp80)) {
+            return fp64_qnani.value;
+        } else {
+            assert(fp80_isqnan(fp80));
+            return fp80_sgn(fp80) > 0 ? fp64_qnan.value : fp64_nqnan.value;
+        }
     }
 }
 
@@ -213,28 +213,28 @@ fp80_cvfd(double value)
     const uint64_t fp80_frac = frac << (FP80_FRAC_BITS - FP64_FRAC_BITS);
 
     if (exp != 0) {
-	// Normal, inf, nan
-	const unsigned fp80_exp = exp == FP64_EXP_SPECIAL ?
-	    FP80_EXP_SPECIAL : (unb_exp + FP80_EXP_BIAS);
-	const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT,
-				       fp80_frac, fp80_exp);
-	return fp80;
+        // Normal, inf, nan
+        const unsigned fp80_exp = exp == FP64_EXP_SPECIAL ?
+            FP80_EXP_SPECIAL : (unb_exp + FP80_EXP_BIAS);
+        const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT,
+                                       fp80_frac, fp80_exp);
+        return fp80;
     } else if (exp == 0 && frac == 0) {
-	// Zero
-	const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT, 0, 0);
-	return fp80;
+        // Zero
+        const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT, 0, 0);
+        return fp80;
     } else {
-	// Denormal
-	uint64_t fp80_fi = fp80_frac;
-	int shift_amt = 0;
-	while (!(fp80_fi & FP80_INT_BIT)) {
-	    fp80_fi <<= 1;
-	    ++shift_amt;
-	}
-	const unsigned fp80_exp = (unb_exp - shift_amt) + FP80_EXP_BIAS;
-	const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT,
-				       fp80_fi, fp80_exp);
-	return fp80;
+        // Denormal
+        uint64_t fp80_fi = fp80_frac;
+        int shift_amt = 0;
+        while (!(fp80_fi & FP80_INT_BIT)) {
+            fp80_fi <<= 1;
+            ++shift_amt;
+        }
+        const unsigned fp80_exp = (unb_exp - shift_amt) + FP80_EXP_BIAS;
+        const fp80_t fp80 = BUILD_FP80(fp64.bits & FP64_SIGN_BIT,
+                                       fp80_fi, fp80_exp);
+        return fp80;
     }
 }
 
@@ -242,6 +242,6 @@ void
 fp80_debug_dump(FILE *fout, fp80_t fp80)
 {
     fprintf(fout, "sgn: %i, int: %i, frac: 0x%llx, exp: 0x%x (%i)\n",
-	    fp80_sgn(fp80), !!(fp80.u.repr.fi & FP80_INT_BIT), FP80_FRAC(fp80),
-	    FP80_EXP(fp80), FP80_EXP(fp80) - FP80_EXP_BIAS);
+            fp80_sgn(fp80), !!(fp80.u.repr.fi & FP80_INT_BIT), FP80_FRAC(fp80),
+            FP80_EXP(fp80), FP80_EXP(fp80) - FP80_EXP_BIAS);
 }

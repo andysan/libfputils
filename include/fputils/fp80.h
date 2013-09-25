@@ -48,11 +48,11 @@ extern "C" {
 /** Internal representation of an 80-bit float. */
 typedef struct  {
     union {
-	char bits[10];
-	struct {
-	    uint64_t fi;
-	    uint16_t se;
-	} repr;
+        char bits[10];
+        struct {
+            uint64_t fi;
+            uint16_t se;
+        } repr;
     } u;
 } fp80_t;
 
@@ -113,7 +113,7 @@ int fp80_issnan(fp80_t fp80);
  * <ul>
  *   <li>FP_NAN - The value is NaN.
  *   <li>FP_INFINITE - The value is either +inf or -inf.
- *   <li>FP_ZERO - The value is either +0 or -0. 
+ *   <li>FP_ZERO - The value is either +0 or -0.
  *   <li>FP_SUBNORMAL - The value is to small to be represented as a
  *                      normalized float. See fp80_issubnormal().
  *   <li>FP_NORMAL - The value is neither of above.

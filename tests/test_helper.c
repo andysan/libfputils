@@ -53,9 +53,9 @@ void
 test_exit()
 {
     if (test_fail_count)
-	exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     else
-	exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);
 }
 
 void
@@ -88,18 +88,18 @@ test_diag(const char *fmt, ...)
 
 static void
 test_vstatus(const char *status, const char *test,
-	    const char *directive,
-	    const char *fmt_why, va_list ap)
+             const char *directive,
+             const char *fmt_why, va_list ap)
 {
     printf("%s %i", status, test_current);
-    
+
     if (test && test[0] != '\0')
-	printf(" - %s", test);
+        printf(" - %s", test);
 
     if (directive && directive[0] != '\0') {
-	printf(" # %s ", directive);
-	if (fmt_why && fmt_why[0] != '\0')
-	    vprintf(fmt_why, ap);
+        printf(" # %s ", directive);
+        if (fmt_why && fmt_why[0] != '\0')
+            vprintf(fmt_why, ap);
     }
     printf("\n");
 
@@ -108,8 +108,8 @@ test_vstatus(const char *status, const char *test,
 
 static void __attribute__((format (printf, 4, 5)))
 test_status(const char *status, const char *test,
-	    const char *directive,
-	    const char *fmt_why, ...)
+            const char *directive,
+            const char *fmt_why, ...)
 {
     va_list ap;
     va_start(ap, fmt_why);
